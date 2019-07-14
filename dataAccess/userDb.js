@@ -1,83 +1,131 @@
-module.exports = makeUserDb = (User) => {
+module.exports = makeUserDb = (Model) => {
 
-    const findUserByUsername = async (passedUser) => {
-        return User.findOne({ username: passedUser.getUserName() })
+    const findUserById = async (userId) => {
+        return await Model.User.findById(userId);
+    }
+
+    const findCardById = async (cardId) => {
+        return await Model.Card.findById(cardId);
+    }
+
+    const findDeckById = async(deckId) => {
+        return await Model.Deck.findById(deckId)
     }
 
     // for testing !! 
 
     const dropDb = async () => {
-        User.collection.drop()
-    }
-
-    const findUsersDeck = async (passedUser, deckname) => {
-        const deck = await User.find({username: passedUser.getUserName()})
-        .select({'decks': {$elemMatch: {name: deckname}}});
-        return await deck[0].decks
+        Model.User.collection.drop();
+        Model.Card.collection.drop();
+        Model.Deck.collection.drop();
     }
 
     const insertUser = async (newUser) => {
-        const userToDb = await User.create({
-            username: newUser.getUserName(),
-            email: newUser.getEmail(),
-            password: newUser.getPassword()
-
+        const userToDb = await Model.User.create({
+            _id: newUser._id,
+            username: newUser.username,
+            email: newUser.email,
+            password: newUser.password
         });
-        return await userToDb;
+        return userToDb;
     }
 
-    const insertDeck = async (passedUser, passedDeck) => {
-        const user = await User.findOne({ username: passedUser.getUserName() });
-        await user.decks.push({
-            name: passedDeck.getDeckName(),
-            cards: passedDeck.getCards()
-        });
-        await user.save();
-        return await user.decks;
+    const addDeckToUser = async (userId, passedDeck) => {
+        let newCards = [];
+
+        for (let index = 0; index < passedDeck.cards.length; index++) {
+            const card = passedDeck.cards[index];
+            newCards.push(await Model.Card.create({
+                _id: card._id,
+                front: card.front,
+                back: card.back,
+                example: card.example
+            }))
+
+        }
+
+        console.log(newCards);
+
+
+        const newDeck = await Model.Deck.create({
+            _id: passedDeck._id,
+            name: passedDeck.name,
+            cards: newCards
+        })
+        const user = await Model.User.findById(userId)
+        await user.decks.push(newDeck)
+        await user.save()
+        return user.decks
     }
 
-    // need to fix to go with our entitie structue
-    const insertCard = async (passedUser, passedDeck, passedCard) => {
+    const addCardsToDeck = async (deckId, passedCards) => {
+        const deck = await Model.Deck.findById(deckId);
 
-        return await User.updateOne({ username: passedUser.getUserName(), 'decks.name': passedDeck.getDeckName() },
-            {
-                $push: {
-                    'decks.$.cards': {
-                        front: passedCard.getFront(),
-                        back: passedCard.getBack(),
-                    }
-                }
-            });
+        for (let index = 0; index < passedCards.length; index++) {
+            const card = passedCards[index];
+            await deck.cards.push(await Model.Card.create({
+                _id: card._id,
+                front: card.front,
+                back: card.back,
+                example: card.example
+            }))
+        }
+        await deck.save()
+        return deck
     }
 
-    const removeDeck = async (passedUser, deckname) => {
-        const user = await User.findOneAndUpdate(
-            { username: passedUser.getUserName() },
-            {
-                $pull: { decks: { name: deckname } },
-            }
-        )
-        await user.save();
-        return await user;
+    const updateDeckName = async (deckId, newName) => {
+        return await Model.Deck.findOneAndUpdate({_id: deckId}, {
+            $set: {name: newName}
+        })
     }
 
-    const removeCard = async () => {
-        
+    const updateCards = async (updatedCards) => {
+        for (let index = 0; index < updatedCards.length; index++) {
+            const card = updatedCards[index];
+            await Model.Card.findOneAndUpdate({_id: card._id},
+                {
+                    $set: {front: card.front, back: card.back, example: card.exampleText}
+                })
+        }
+        return {'Status': 'ok'}
     }
 
-    // edit card
-
-    const updateCard = async (passedCard, deckname, updatedText) => {
-        const updatedCard = await User.findOneAndUpdate()
+    const studyDeck = async (deckId) => {
+        return await Model.Deck.findById(deckId)
+        .populate('cards')
     }
 
-    return Object.freeze({
-        findUserByUsername,
-        findUsersDeck,
-        insertUser,
-        insertDeck,
-        insertCard,
-        removeDeck,
-        dropDb
-    })
-}
+    const removeDeck = async (deckId) => {
+        const deck = await Model.Deck.findById(deckId)
+        for (let index = 0; index < deck.cards.length; index++) {
+            const card = deck.cards[index];
+            await Model.Card.findOneAndRemove({_id: card})
+        }
+        await deck.remove()
+        await deck.save()
+    }
+
+    const removeCards = async (cardIds) => {
+        for (let index = 0; index < cardIds.length; index++) {
+            const cardId = cardIds[index];
+            Model.Card.findOneAndRemove({_id: cardId})
+        }
+    }
+
+        return Object.freeze({
+            insertUser,
+            addDeckToUser,
+            addDeckToUser,
+            addCardsToDeck,
+            updateDeckName,
+            updateCards,
+            removeDeck,
+            removeCards,
+            findCardById,
+            findUserById,
+            findDeckById,
+            studyDeck,
+            dropDb
+        })
+    }

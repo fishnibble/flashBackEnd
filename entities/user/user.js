@@ -1,9 +1,10 @@
-module.exports = buildMakeUser = (encryptPassword) => {
+module.exports = buildMakeUser = (encryptPassword, idHelper) => {
     return makeUser = async ({
         username,
         email,
         password,
-        decks
+        decks,
+        _id
     } = {}) => {
 
         if (!username) {
@@ -26,6 +27,19 @@ module.exports = buildMakeUser = (encryptPassword) => {
             throw new Error('Password needs to be greather then 5');
         }
 
+        if ((_id)) {
+            const validId = idHelper.checkId(_id)
+            if(validId === false) {
+                throw new Error('Invalid ID')
+            } else {
+                _id = validId
+            }
+        }
+
+        if (!_id) {
+            _id = idHelper.genId()
+        }
+
 
         const encryptedPassword = await encryptPassword(password);
 
@@ -34,7 +48,8 @@ module.exports = buildMakeUser = (encryptPassword) => {
             getUserName: () => username,
             getEmail: () => email,
             getPassword: () => encryptedPassword,
-            getDecks: () => decks
+            getDecks: () => decks,
+            getId: () => _id
         });
 
     }
