@@ -1,5 +1,9 @@
 module.exports = makeUserDb = (Model) => {
 
+    const findUserByName = async (username) => {
+        return await Model.User.findOne({username: username})
+    }
+
     const findUserById = async (userId) => {
         return await Model.User.findById(userId);
     }
@@ -43,15 +47,13 @@ module.exports = makeUserDb = (Model) => {
             }))
 
         }
-
-        console.log(newCards);
-
-
+        
         const newDeck = await Model.Deck.create({
             _id: passedDeck._id,
-            name: passedDeck.name,
+            name: passedDeck.deckName,
             cards: newCards
         })
+        
         const user = await Model.User.findById(userId)
         await user.decks.push(newDeck)
         await user.save()
@@ -63,12 +65,15 @@ module.exports = makeUserDb = (Model) => {
 
         for (let index = 0; index < passedCards.length; index++) {
             const card = passedCards[index];
-            await deck.cards.push(await Model.Card.create({
+            // need to fix. It no longer pushes the card. only the refernce 
+            const newCard = await Model.Card.create({
                 _id: card._id,
                 front: card.front,
                 back: card.back,
                 example: card.example
-            }))
+            });
+
+            await deck.cards.push(newCard._id)
         }
         await deck.save()
         return deck
@@ -104,18 +109,19 @@ module.exports = makeUserDb = (Model) => {
         }
         await deck.remove()
         await deck.save()
+        return deck
     }
 
     const removeCards = async (cardIds) => {
         for (let index = 0; index < cardIds.length; index++) {
             const cardId = cardIds[index];
-            Model.Card.findOneAndRemove({_id: cardId})
+            return await Model.Card.findOneAndRemove({_id: cardId})
         }
     }
 
         return Object.freeze({
+            findUserByName,
             insertUser,
-            addDeckToUser,
             addDeckToUser,
             addCardsToDeck,
             updateDeckName,

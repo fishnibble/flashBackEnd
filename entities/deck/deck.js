@@ -1,4 +1,4 @@
-// prob want to sanitize title
+const buildCards = require('../card/index')
 
 module.exports = buildMakeDeck = (idHelper) => {
     return makeDeck = ({
@@ -26,6 +26,10 @@ module.exports = buildMakeDeck = (idHelper) => {
         if (!_id) {
             _id = idHelper.genId()
         }
+
+        cards.map(card => {
+            return buildCards(card);
+        })
 
         return Object.freeze({
             getDeckName: () => deckName,

@@ -1,12 +1,15 @@
 const makeUser = require('../entities/user/index');
 module.exports = makeBuildRegisterUser = (User) => {
     return registerUser = async (userInfo) => {
-
+        
         const newUser = await makeUser(userInfo);
         
         const exists = await User.findUserByName(newUser.getUserName())
-        if (doesUserExist) {
-            return exists;
+        if (exists) {
+            return {
+                error: 'User exits',
+                exists
+            };
         }
         return User.insertUser({
             _id: newUser.getId(),
