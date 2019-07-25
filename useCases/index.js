@@ -5,6 +5,7 @@ const makeBuildUpdateDeckName = require('./updateDeckName');
 const makeBuildEditCards = require('./editCards');
 const makeBuildRemoveDeck = require('./removeDeck');
 const makeBuildRemoveCards = require('./removeCards');
+const makeStudyDeck = require('./studyDeck');
 const User = require('../dataAccess/index');
 
 
@@ -15,6 +16,7 @@ const updateDeckName = makeBuildUpdateDeckName(User);
 const editCards = makeBuildEditCards(User);
 const removeDeck = makeBuildRemoveDeck(User);
 const removeCards = makeBuildRemoveCards(User);
+const studyDeck = makeStudyDeck(User)
 
 const userService = Object.freeze({
     registerUser,
@@ -23,7 +25,8 @@ const userService = Object.freeze({
     updateDeckName,
     editCards,
     removeDeck,
-    removeCards
+    removeCards,
+    studyDeck
 })
 
 module.exports = userService

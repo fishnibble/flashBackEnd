@@ -1,6 +1,7 @@
 const makeUser = require('../entities/user/index');
 module.exports = makeBuildRegisterUser = (User) => {
     return registerUser = async (userInfo) => {
+        console.log('registerUser ' + userInfo);
         
         const newUser = await makeUser(userInfo);
         
