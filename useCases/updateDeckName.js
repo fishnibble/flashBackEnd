@@ -1,5 +1,5 @@
 module.exports = makeUpdateDeckName = (User) => {
-    return updateDeckName = (deckId, newName) => {
-        User.updateDeckName(deckId, newName)
+    return updateDeckName = async (deckId, newName) => {
+        return await User.updateDeckName(deckId, newName)
     }
 }

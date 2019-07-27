@@ -1,10 +1,14 @@
 module.exports = makePostDeckToUser = (addDeckToUser) => {
     return postDeckToUser = async (http) => {
         try {
-            const { deck } = http.body.deck;
-            const { userId } = http.body.userId;
+            const deck = {
+                deckName: http.body.deckName,
+                cards: JSON.parse(http.body.cards)
+            }
+            
+            const userId = http.body.userId
 
-            const postDeckToUser = await addDeckToUser.addDeckToUser(userId, deck);
+            const postDeckToUser = await addDeckToUser(userId, deck);
 
             return {
                 headers: {
@@ -19,8 +23,9 @@ module.exports = makePostDeckToUser = (addDeckToUser) => {
                     'Content-Type': 'application/json'
                 },
                 statusCode: 400,
-                body: { e }
+                body: e 
             }
+            
         }
 
     }
