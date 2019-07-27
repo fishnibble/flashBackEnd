@@ -4,11 +4,11 @@
 
 **Install dependencies**
 ```bash
-npm install *Root folder*
+npm install 
 ```
 **Run**
 ```bash
-node index.js *Root folder*
+node index.js 
 ```
 ## TODO
 
