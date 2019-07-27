@@ -2,10 +2,8 @@ module.exports = makePostUser = (registerUser) => {
     return postUser = async (httpRequest) => {
         try {
             
-            const userInfo = JSON.stringify(httpRequest.body)
-            
-            const postedUser = await registerUser(JSON.parse(userInfo));
-            console.log(postedUser);
+            const userInfo = httpRequest.body
+            const postedUser = await registerUser(userInfo);
             
             return {
                 heders: { 
@@ -15,7 +13,13 @@ module.exports = makePostUser = (registerUser) => {
                 body: postedUser 
             }
         } catch(e) {
-            console.log(e);
+            return {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                statusCode: 400,
+                body: e
+            }
         }
     }
 }

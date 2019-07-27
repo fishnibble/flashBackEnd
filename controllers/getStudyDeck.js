@@ -2,7 +2,7 @@ module.exports = makeStudyDeck = (studyDeck) => {
     return studyDeck = async (http) => {
 
         try {
-            const { deckId } = http.body.deckId;
+            const deckId = http.body.deckId;
             const cards = await studyDeck.studyDeck(deckId);
             
             return {
@@ -23,7 +23,5 @@ module.exports = makeStudyDeck = (studyDeck) => {
                 body: e
             }
         }
-
-
     }
 }

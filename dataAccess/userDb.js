@@ -1,7 +1,7 @@
 module.exports = makeUserDb = (Model) => {
 
     const findUserByName = async (username) => {
-        return await Model.User.findOne({username: username})
+        return await Model.User.findOne({ username: username })
     }
 
     const findUserById = async (userId) => {
@@ -12,7 +12,7 @@ module.exports = makeUserDb = (Model) => {
         return await Model.Card.findById(cardId);
     }
 
-    const findDeckById = async(deckId) => {
+    const findDeckById = async (deckId) => {
         return await Model.Deck.findById(deckId)
     }
 
@@ -47,13 +47,13 @@ module.exports = makeUserDb = (Model) => {
             }))
 
         }
-        
+
         const newDeck = await Model.Deck.create({
             _id: passedDeck._id,
             name: passedDeck.deckName,
             cards: newCards
         })
-        
+
         const user = await Model.User.findById(userId)
         await user.decks.push(newDeck)
         await user.save()
@@ -80,32 +80,31 @@ module.exports = makeUserDb = (Model) => {
     }
 
     const updateDeckName = async (deckId, newName) => {
-        return await Model.Deck.findOneAndUpdate({_id: deckId}, {
-            $set: {name: newName}
+        return await Model.Deck.findOneAndUpdate({ _id: deckId }, {
+            $set: { name: newName }
         })
     }
 
     const updateCards = async (updatedCards) => {
         for (let index = 0; index < updatedCards.length; index++) {
             const card = updatedCards[index];
-            await Model.Card.findOneAndUpdate({_id: card._id},
+            return await Model.Card.findOneAndUpdate({ _id: card._id },
                 {
-                    $set: {front: card.front, back: card.back, example: card.exampleText}
+                    $set: { front: card.front, back: card.back, example: card.exampleText }
                 })
         }
-        return {'Status': 'ok'}
     }
 
     const studyDeck = async (deckId) => {
         return await Model.Deck.findById(deckId)
-        .populate('cards')
+            .populate('cards')
     }
 
     const removeDeck = async (deckId) => {
         const deck = await Model.Deck.findById(deckId)
         for (let index = 0; index < deck.cards.length; index++) {
             const card = deck.cards[index];
-            await Model.Card.findOneAndRemove({_id: card})
+            await Model.Card.findOneAndRemove({ _id: card })
         }
         await deck.remove()
         await deck.save()
@@ -115,23 +114,23 @@ module.exports = makeUserDb = (Model) => {
     const removeCards = async (cardIds) => {
         for (let index = 0; index < cardIds.length; index++) {
             const cardId = cardIds[index];
-            return await Model.Card.findOneAndRemove({_id: cardId})
+            return await Model.Card.findOneAndRemove({ _id: cardId })
         }
     }
 
-        return Object.freeze({
-            findUserByName,
-            insertUser,
-            addDeckToUser,
-            addCardsToDeck,
-            updateDeckName,
-            updateCards,
-            removeDeck,
-            removeCards,
-            findCardById,
-            findUserById,
-            findDeckById,
-            studyDeck,
-            dropDb
-        })
-    }
+    return Object.freeze({
+        findUserByName,
+        insertUser,
+        addDeckToUser,
+        addCardsToDeck,
+        updateDeckName,
+        updateCards,
+        removeDeck,
+        removeCards,
+        findCardById,
+        findUserById,
+        findDeckById,
+        studyDeck,
+        dropDb
+    })
+}

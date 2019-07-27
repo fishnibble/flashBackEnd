@@ -2,7 +2,7 @@ module.exports = makeDeleteCards = (removeCards) => {
     return deleteCards = async (http) => {
         try {
 
-            const { cardsId } = http.body.cardsId;
+            const cardsId = http.body.cardsId;
 
             const removedCards = await removeCards.removeCards(cardsId);
 
@@ -11,7 +11,7 @@ module.exports = makeDeleteCards = (removeCards) => {
                     'Content-Type': 'application/json'
                 },
                 statusCode: 200,
-                body: cardsId
+                body: removedCards
             }
         } catch (e) {
             return {

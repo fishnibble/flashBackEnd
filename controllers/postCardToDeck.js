@@ -1,7 +1,7 @@
 module.exports = makePostCardToDeck = (addCardToDeck) => {
     return postCardToDeck = async (http) => {
         try {
-            const cards = JSON.parse(http.body.cards);
+            const cards = http.body.cards;
             const deckId = http.body.deckId;
             const addCard = await addCardToDeck(deckId, cards);
             
@@ -22,8 +22,6 @@ module.exports = makePostCardToDeck = (addCardToDeck) => {
                 statusCode: 400,
                 error: e 
             }
-
-            console.log(e)
         }
     }
 }

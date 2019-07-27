@@ -1,9 +1,9 @@
 const buildCard = require('../entities/card/index');
- 
+
 module.exports = makeEditCards = (User) => {
     return editCards = (newCards) => {
         console.log(newCards);
-        
+
         newCards.map(card => {
             const newCard = buildCard(card);
             return {
@@ -13,6 +13,6 @@ module.exports = makeEditCards = (User) => {
                 example: newCard.getExampleText()
             }
         })
-        User.updateCards(newCards);
+        return User.updateCards(newCards);
     }
 }
