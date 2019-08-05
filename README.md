@@ -12,7 +12,7 @@ node index.js *Root folder*
 ```
 ## TODO
 
-- [ ] implement user auth
+- [x] implement user auth
 - [x] figure out better parsing for JSON **for user controller**
 - [ ] implement better error handling **use cases and for mongo**
 - [ ] move over to jest for testing

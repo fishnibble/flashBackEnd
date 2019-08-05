@@ -4,7 +4,7 @@ const userControler = require('./controllers/index');
 const expressCallBack = require('./expressCallBack/index');
 const db = require('./db/index');
 const passport = require('passport');
-const auth = passport.passport.authenticate('user', { session: false })
+const auth = passport.authenticate('user', { session: false })
 require('dotenv').config();
 
 /*
@@ -54,5 +54,3 @@ app.delete('/removedeck',
 app.listen(3000, () => {
   console.log('Server is listening on port ' + process.env.PORT)
 })
-
-db();

@@ -1,5 +1,5 @@
 module.exports = makePostLogin = (userLogin) => {
-    return postLogin = (http) => {
+    return postLogin = async (http) => {
         try {
             const username = http.body.username;
             const password = http.body.password;
