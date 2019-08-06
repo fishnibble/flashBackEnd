@@ -10,7 +10,8 @@ module.exports = makePatchDeckName = (edditDeckName) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: editName
+                body: editName,
+                statusCode: 202
             }
         } catch (e) {
             return {

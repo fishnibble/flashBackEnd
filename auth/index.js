@@ -10,14 +10,14 @@ usrOpts.secretOrKey = process.env.KEY
 module.exports = passport => {
     passport.use('user',
         new JwtStrategy(usrOpts, (jwt_payload, done) => {
-            User.findById(jwt_payload.id)
+            User.findUserById(jwt_payload.id)
                 .then(user => {
                     if (user) {
                         return done(null, user);
                     }
                     return done(null, false);
                 })
-                .catch(err);
+                .catch(err => cosnole.log(err));
         })
     );
 };

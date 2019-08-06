@@ -9,8 +9,8 @@ const makeStudyDeck = require('./studyDeck');
 const makeUserLogin = require('./login');
 const User = require('../dataAccess/index');
 const comparePass = require('bcrypt').compare;
-const jwtSign = require('jsonwebtoken').verify;
-
+const jwtSign = require('jsonwebtoken').sign;
+require('dotenv').config();
 
 const registerUser = makeBuildRegisterUser(User);
 const makeDeck = makeBuildDeck(User);
@@ -20,7 +20,7 @@ const editCards = makeBuildEditCards(User);
 const removeDeck = makeBuildRemoveDeck(User);
 const removeCards = makeBuildRemoveCards(User);
 const studyDeck = makeStudyDeck(User);
-const userLogin = makeUserLogin(User, comparePass, jwtSign);
+const userLogin = makeUserLogin(User, comparePass, jwtSign, process.env.KEY);
 
 const userService = Object.freeze({
     registerUser,

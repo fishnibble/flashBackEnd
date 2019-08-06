@@ -1,6 +1,7 @@
 module.exports = function makeExpressCallabck (controller) {
     return (req, res) => {
       const httpRequest = {
+        user: req.user,
         body: req.body,
         query: req.query,
         params: req.params,

@@ -4,7 +4,6 @@ const userControler = require('./controllers/index');
 const expressCallBack = require('./expressCallBack/index');
 const db = require('./db/index');
 const passport = require('passport');
-const auth = passport.authenticate('user', { session: false })
 require('dotenv').config();
 
 /*
@@ -21,35 +20,38 @@ app.use((_, res, next) => {
   next()
 })
 
+app.use(passport.initialize());
+require('./auth/index')(passport);
+
 app.post('/register',
   expressCallBack(userControler.postUser));
 
 app.post('/login', 
   expressCallBack(userControler.postLogin))
 
-app.post('/adddeck',
-  expressCallBack(userControler.postDeckToUser),
-  auth);
+app.post('/adddeck', 
+  passport.authenticate('user', { session: false }), 
+  expressCallBack(userControler.postDeckToUser));
 
 app.post('/addcards',
-  expressCallBack(userControler.postCardToDeck),
-  auth);
+  passport.authenticate('user', { session: false }),
+  expressCallBack(userControler.postCardToDeck));
 
-app.patch('/changedeckname',
-  expressCallBack(userControler.patchDeckName),
-  auth);
+app.patch('/updatedeckname', 
+  passport.authenticate('user', { session: false }),
+  expressCallBack(userControler.patchDeckName));
 
-app.patch('/changecards',
-  expressCallBack(userControler.patchCards),
-  auth);
+app.patch('/updatecards',
+  passport.authenticate('user', { session: false }),
+  expressCallBack(userControler.patchCards));
 
 app.delete('/removecards',
-  expressCallBack(userControler.deleteCards),
-  auth);
+  passport.authenticate('user', { session: false }),
+  expressCallBack(userControler.deleteCards));
 
 app.delete('/removedeck',
-  expressCallBack(userControler.deleteDeck),
-  auth);
+  passport.authenticate('user', { session: false }),
+  expressCallBack(userControler.deleteDeck));
 
 app.listen(3000, () => {
   console.log('Server is listening on port ' + process.env.PORT)

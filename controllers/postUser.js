@@ -19,6 +19,7 @@ module.exports = makePostUser = (registerUser) => {
                 },
                 statusCode: 400,
                 body: e
+                
             }
         }
     }

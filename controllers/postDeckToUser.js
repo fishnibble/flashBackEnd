@@ -1,8 +1,9 @@
 module.exports = makePostDeckToUser = (addDeckToUser) => {
     return postDeckToUser = async (http) => {
         try {
+            console.log(http.user)
             const deck = http.body.deck
-            const userId = http.body.userId
+            const userId = http.user._id
 
             const postDeckToUser = await addDeckToUser(userId, deck);
 
@@ -20,6 +21,7 @@ module.exports = makePostDeckToUser = (addDeckToUser) => {
                 },
                 statusCode: 400,
                 body: e
+                
             }
         }
     }
