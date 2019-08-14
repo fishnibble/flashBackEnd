@@ -3,8 +3,9 @@ module.exports = makeDeleteDeck = (removeDeck) => {
 
         try {
             const deckId = http.body.deckId;
+            const userId = http.user._id
 
-            const delDeck = await removeDeck.removeDeck(deckId);
+            const delDeck = await removeDeck.removeDeck(userId, deckId);
 
             return {
                 headers: {

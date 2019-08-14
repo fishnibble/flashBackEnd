@@ -1,26 +1,28 @@
-module.exports = makePostUser = (registerUser) => {
-    return postUser = async (httpRequest) => {
+module.exports = makePostLogin = (userLogin) => {
+    return postLogin = async (http) => {
         try {
-            
-            const userInfo = httpRequest.body
-            const postedUser = await registerUser(userInfo);
-            
+            const username = http.body.username;
+            const password = http.body.password;
+
+            const loggedInUser = await userLogin(username, password);
+
             return {
                 heders: { 
                     'Content-Type': 'application/json'
                 },
                 statusCode: 201,
-                body: postedUser 
+                body: loggedInUser
             }
         } catch(e) {
             return {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                statusCode: 400,
-                body: e
+                statusCode: 401,
+                body: console.log(e)
                 
             }
         }
+
     }
 }

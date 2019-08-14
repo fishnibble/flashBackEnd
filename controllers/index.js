@@ -1,4 +1,5 @@
 const makePostUser = require('./postuser');
+const makePostLogin = require('./postLogin');
 const makePostDeckToUser = require('./postdecktouser');
 const makeCardsToDeck = require('./postcardtodeck');
 const makePatchDeckName = require('./patchdeckname');
@@ -17,9 +18,11 @@ const getStudyDeck = makeGetStudyDeck(User.studyDeck);
 const deleteDeck = makeDeleteDeck(User.removeDeck);
 const deleteCards = makeDeleteCards(User.removeCards);
 const patchCards = makePatchCards(User.editCards);
+const postLogin = makePostLogin(User.userLogin);
 
 const userControler = Object.freeze({
     postUser,
+    postLogin,
     postDeckToUser,
     postCardToDeck,
     patchDeckName,

@@ -3,7 +3,8 @@ module.exports = makePostCardToDeck = (addCardToDeck) => {
         try {
             const cards = http.body.cards;
             const deckId = http.body.deckId;
-            const addCard = await addCardToDeck(deckId, cards);
+            const userId = http.user._id
+            const addCard = await addCardToDeck(userId, deckId, cards);
             
             return {
                 headers: {
