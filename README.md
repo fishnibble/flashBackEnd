@@ -9,6 +9,12 @@ npm install
 **Run**
 ```bash
 node index.js
+=======
+npm install 
+```
+**Run**
+```bash
+node index.js 
 ```
 
 ## Working routes
@@ -72,6 +78,7 @@ Delete:
 {
   deckId
 }
+
 ```
 
 ## TODO
@@ -82,4 +89,4 @@ Delete:
 - [ ] move over to jest for testing
 - [x] better way to handle JSON for http? 
 - [ ] implement some type of repetition spacing feature
-- [ ] Finish AUTH 
+- [x] Finish AUTH 
