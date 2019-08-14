@@ -1,7 +1,7 @@
 module.exports = makePostDeckToUser = (addDeckToUser) => {
     return postDeckToUser = async (http) => {
         try {
-            console.log(http.user)
+            
             const deck = http.body.deck
             const userId = http.user._id
 

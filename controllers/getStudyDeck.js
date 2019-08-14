@@ -3,7 +3,8 @@ module.exports = makeStudyDeck = (studyDeck) => {
 
         try {
             const deckId = http.body.deckId;
-            const cards = await studyDeck.studyDeck(deckId);
+            const userId = http.user._id
+            const cards = await studyDeck.studyDeck(userId, deckId);
             
             return {
                 headers: {

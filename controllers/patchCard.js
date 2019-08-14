@@ -2,10 +2,11 @@ module.exports = makePatchCard = (edditCards) => {
     return patchCard = async (http) => {
         try {
 
+            const deckId = http.body.deckId
             const updatedCards  = http.body.updatedCards;
-            console.log(updatedCards);
-            
-            const changeCard = await edditCards(updatedCards);
+            const userId = http.user._id;
+
+            const changeCard = await edditCards(userId, deckId, updatedCards);
             return {
                 headers: {
                     'Content-Type': 'application/json'
