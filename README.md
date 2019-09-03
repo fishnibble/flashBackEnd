@@ -12,7 +12,12 @@ npm install
 ```
 **Run**
 ```bash
-node index.js 
+npm start
+```
+
+## Testing
+```bash
+npm test
 ```
 
 ## Working routes
@@ -84,7 +89,7 @@ Delete:
 - [x] implement user AUTH
 - [x] figure out better parsing for JSON **for user controller**
 - [ ] implement better error handling **use cases and for mongo**
-- [ ] move over to jest for testing
+- [x] move over to Mocha for testing **In progress**
 - [x] better way to handle JSON for http? 
 - [ ] implement some type of repetition spacing feature
 - [x] Finish AUTH 
