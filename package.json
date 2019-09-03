@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha './{,!(node_modules)/**}/*.test.js'",
     "start": "nodemon ./index.js"
   },
   "author": "Joshua C. Jones",
@@ -18,6 +18,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0"
+  },
   "description": "Back end for flash card app"
 }

@@ -8,7 +8,6 @@ module.exports = makeBuildRegisterUser = (User) => {
         if (exists) {
             return {
                 error: 'User exits',
-                exists
             };
         }
         return User.insertUser({

@@ -1,6 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const User = require('../dataAccess/index');
+const User = require('../../dataAccess/index');
 require('dotenv').config();
 
 const usrOpts = {};
