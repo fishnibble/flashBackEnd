@@ -8,8 +8,6 @@ npm install
 ```
 **Run**
 ```bash
-node index.js
-=======
 npm install 
 ```
 **Run**
