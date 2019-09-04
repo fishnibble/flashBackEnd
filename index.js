@@ -1,10 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const userControler = require('./controllers/index');
 const expressCallBack = require('./expressCallBack/index');
 const db = require('./db/index');
 const passport = require('passport');
-require('dotenv').config();
 
 /*
   TODO: Need to add passport to routes
@@ -21,7 +21,7 @@ app.use((_, res, next) => {
 })
 
 app.use(passport.initialize());
-require('./auth/index')(passport);
+require('./config/auth/index')(passport);
 
 app.post('/register',
   expressCallBack(userControler.postUser));
