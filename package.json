@@ -21,5 +21,5 @@
   "devDependencies": {
     "chai": "^4.2.0"
   },
-  "description": "Back end for flash card app"
+  "description": "Backend for flash card app"
 }

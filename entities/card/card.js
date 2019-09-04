@@ -14,12 +14,6 @@ module.exports = buildMakeCard = (md5, idHelper) => {
             throw new Error('Back of card needs text')
         }
 
-        let hash;
-
-        const makeHash = () => {
-            return md5(front + back)
-        }
-
         if ((_id)) {
             const validId = idHelper.checkId(_id)
             if(validId === false) {
@@ -37,7 +31,6 @@ module.exports = buildMakeCard = (md5, idHelper) => {
             getFront: () => front,
             getBack: () => back,
             getExampleText: () => exampleText,
-            getHash: () => hash || (hash = makeHash()),
             getId: () => _id
         })
     }
