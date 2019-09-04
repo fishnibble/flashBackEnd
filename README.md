@@ -6,10 +6,7 @@
 ```bash
 npm install
 ```
-**Run**
-```bash
-npm install 
-```
+
 **Run**
 ```bash
 npm start
